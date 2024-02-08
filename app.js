@@ -39,7 +39,7 @@ $(document).ready(function () {
               company: "test",
               address1: "test",
               city: "test",
-              country: "test",
+              country: "PL",
               postalCode: "12-123",
               province: "mazowieckie",
               phone: "323123234",
