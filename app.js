@@ -1,29 +1,50 @@
 $(document).ready(function () {
-  var observer = new MutationObserver(function (mutationsList, observer) {
+  var observer = new MutationObserver(checkSnipcartWrapper);
+
+  function checkSnipcartWrapper(mutationsList, observer) {
     var snipcartWrapper = $("#snipcart .snipcart-layout--large");
 
     if (snipcartWrapper.length) {
-      var radioButtons = $("input[type=radio]");
       var radioInPost = $("input[type=radio][value=inpost]");
-
-      if (radioButtons.length) {
-        if (radioInPost.prop("checked")) {
-          $(".custom-geowidget").css("display", "block");
-          appendGeoWidget();
-          observer.disconnect();
-        }
-        radioButtons.on("change", function () {
-          if (radioInPost.prop("checked")) {
-            $(".custom-geowidget").css("display", "block");
-            appendGeoWidget();
-            observer.disconnect();
-          } else {
-            $(".custom-geowidget").css("display", "none");
-          }
-        });
-      }
+      handleRadioButtons(radioInPost, observer);
     }
-  });
+  }
+
+  function handleRadioButtons(radioInPost, observer) {
+    var radioButtons = $("input[type=radio]");
+    if (radioButtons.length) {
+      checkRadioButtonState(radioInPost, observer);
+      handleRadioButtonChange(radioButtons, radioInPost, observer);
+    }
+  }
+
+  function checkRadioButtonState(radioInPost, observer) {
+    if (radioInPost.prop("checked")) {
+      showGeowidget();
+      appendGeoWidget();
+      observer.disconnect();
+    }
+  }
+
+  function handleRadioButtonChange(radioButtons, radioInPost, observer) {
+    radioButtons.on("change", function () {
+      if (radioInPost.prop("checked")) {
+        showGeowidget();
+        appendGeoWidget();
+        observer.disconnect();
+      } else {
+        hideGeowidget();
+      }
+    });
+  }
+
+  function showGeowidget() {
+    $(".custom-geowidget").css("display", "block");
+  }
+
+  function hideGeowidget() {
+    $(".custom-geowidget").css("display", "none");
+  }
 
   function appendGeoWidget() {
     var snipcartBillingForm = $("#snipcart-billing-form");
@@ -58,39 +79,41 @@ $(document).ready(function () {
 
     geowidget.addEventListener("handlePointSelection", async (event) => {
       var details = event.detail;
+      var billingDetails = Snipcart.store.getState().cart.billingAddress;
+      console.log(billingDetails);
       try {
         await Snipcart.api.cart.update({
           email: "john.doe@snipcart.com",
           shipToBillingAddress: false,
           billingAddress: {
-            name: nameField.val(),
-            firstName: nameField.val(),
-            // company: "Sergiusz",
-            address1: streetField.val(),
-            city: cityField.val(),
-            country: "PL",
-            postalCode: codeField.val(),
-            province: provinceField.val(),
-            phone: "123432345",
+            name: billingDetails.fullName,
+            firstName: billingDetails.fullName,
+            // company: billingDetails.company,
+            address1: billingDetails.address1,
+            city: billingDetails.city,
+            country: billingDetails.country,
+            postalCode: billingDetails.postalCode,
+            province: billingDetails.province,
+            phone: billingDetails.phone,
           },
           shippingAddress: {
-            name: nameField.val(),
-            firstName: nameField.val(),
+            name: billingDetails.fullName,
+            firstName: billingDetails.fullName,
             // company: "",
             address1: details.address.line1,
             city: details.address_details.city,
-            country: "PL",
+            country: billingDetails.country,
             postalCode: details.address_details.post_code,
             province: details.address_details.province,
-            phone: "666555444",
+            phone: billingDetails.phone,
           },
         });
       } catch (error) {
         console.log(error);
       }
-      console.log(Snipcart.store.getState().cart);
-      console.log(details);
-      console.log(provinceField.val());
+      // console.log(Snipcart.store.getState().cart);
+      // console.log(details);
+      // console.log(provinceField.val());
     });
   }
 
@@ -98,17 +121,21 @@ $(document).ready(function () {
     childList: true,
     subtree: true,
   });
+
+  applyGeowidgetStyles();
 });
 
-var style = document.createElement("style");
-style.innerHTML = `
-.custom-geowidget {
- height: 35vh;
- margin-bottom: 4rem;
-}
+function applyGeowidgetStyles() {
+  var style = document.createElement("style");
+  style.innerHTML = `
+    .custom-geowidget {
+      height: 35vh;
+      margin-bottom: 4rem;
+    }
 
-.custom-geowidget #geowidget {
- height: 100%;
+    .custom-geowidget #geowidget {
+      height: 100%;
+    }
+  `;
+  document.head.appendChild(style);
 }
-`;
-document.head.appendChild(style);
