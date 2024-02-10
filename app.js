@@ -61,7 +61,7 @@ $(document).ready(function () {
       "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJzQlpXVzFNZzVlQnpDYU1XU3JvTlBjRWFveFpXcW9Ua2FuZVB3X291LWxvIn0.eyJleHAiOjIwMjEzODc2NDIsImlhdCI6MTcwNjAyNzY0MiwianRpIjoiYWYwNmI2ZDctNWVmNi00OTEzLWJlMTgtZGUyY2NmM2UxMjkzIiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5pbnBvc3QucGwvYXV0aC9yZWFsbXMvZXh0ZXJuYWwiLCJzdWIiOiJmOjEyNDc1MDUxLTFjMDMtNGU1OS1iYTBjLTJiNDU2OTVlZjUzNToxQTZWb2RnMHRhby1WMWtUV1dXRUtfNWEwVmdhZkZfUWdYMkFWWVQxSzVBIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2hpcHgiLCJzZXNzaW9uX3N0YXRlIjoiMjk1OTU0YjItZTQ4Zi00Y2Y1LWFjNWMtOWZlYzlhYTI2NWIyIiwic2NvcGUiOiJvcGVuaWQgYXBpOmFwaXBvaW50cyIsInNpZCI6IjI5NTk1NGIyLWU0OGYtNGNmNS1hYzVjLTlmZWM5YWEyNjViMiIsImFsbG93ZWRfcmVmZXJyZXJzIjoiKi53ZWJmbG93LmlvIiwidXVpZCI6ImRiZGZhZWIxLTA0YWItNGYwNC04NDVkLTRlMWEwZGY3MGI5YiJ9.ir05XGASkmQrSsxt5bPFtQz9ItiRmaTp0wxaouRnh3FtiLGag1JT5XX77oNeluEla4LimEEXcZnrzNGL8PQ01Aa12c5OLFdATtZPIzdC_EXpIydahL_XujDU6KWGoJoCMCEf4g-TTumYTi1-9n_dO864RPA9fn-pVFjQvm-ABK1B3rJyRv-73dEu4v-cLvv1UidF005f3kY1WT1TVlml4wCU4c-BBAc_ocqYco5qO-6basAPQyiWZ8xDAErOHjovJvh39YoVcnvhp2GNpMpOUJrhBpC5E_PzMuJHt-piKoSwN6pI37lFfsIge8Lietl2NmSjEhni_dOLCxB26epRZw";
 
     targetColumn.append(
-      `<div class="custom-geowidget"><inpost-geowidget id="geowidget" onpoint="handlePointSelection" token="${token}" language="pl" config="parcelCollect"></inpost-geowidget></div>`
+      `<div class="custom-geowidget"><inpost-geowidget id="geowidget" onpoint="handlePointSelection" token="${token}" language="en" config="parcelCollect"></inpost-geowidget></div>`
     );
 
     const geowidget = document.getElementById("geowidget");
