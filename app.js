@@ -87,7 +87,10 @@ $(document).ready(function () {
 
   function appendGeoWidget() {
     if (geowidgetAppended) return;
-    var userLang = navigator.language || navigator.userLanguage;
+    var userLang = (navigator.language || navigator.userLanguage).substr(0, 2);
+    if (userLang !== "pl") {
+      userLang = "en";
+    }
 
     var firstChild = $(".snipcart-layout__cols > :first-child");
     var targetColumn = firstChild;
