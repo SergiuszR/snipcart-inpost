@@ -46,7 +46,10 @@ $(document).ready(function () {
     $(".custom-geowidget").css("display", "none");
   }
 
+  var geowidgetAppended = false;
+
   function appendGeoWidget() {
+    if (geowidgetAppended) return;
     var snipcartBillingForm = $("#snipcart-billing-form");
 
     var nameField = $(snipcartBillingForm).find('input[name="name"]');
@@ -63,6 +66,8 @@ $(document).ready(function () {
     targetColumn.append(
       `<div class="custom-geowidget"><inpost-geowidget id="geowidget" onpoint="handlePointSelection" token="${token}" language="en" config="parcelCollect"></inpost-geowidget></div>`
     );
+
+    geowidgetAppended = true;
 
     const geowidget = document.getElementById("geowidget");
 
